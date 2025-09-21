@@ -61,6 +61,24 @@
 \newcommand\mycommfont[1]{ \textcolor{blue}{{#1}}}
 \SetCommentSty{mycommfont}
 
+% the lines below allow \texttt line breaking without creating hyphens or splitting words
+% \replace replaces all occurrences of the second arg in the first arg with the third arg
+\ExplSyntaxOn
+\NewDocumentCommand{\replace}{mmm}
+ {
+  \marian_replace:nnn {#1} {#2} {#3}
+ }
+\tl_new:N \l_marian_input_text_tl
+\cs_new_protected:Npn \marian_replace:nnn #1 #2 #3
+ {
+  \tl_set:Nn \l_marian_input_text_tl { #1 }
+  \tl_replace_all:Nnn \l_marian_input_text_tl { #2 } { #3 }
+  \tl_use:N \l_marian_input_text_tl
+ }
+\ExplSyntaxOff
+\let\OldTexttt\texttt
+\renewcommand{\texttt}[1]{\OldTexttt{\replace{#1}{ }{ \allowbreak}}}
+
 %%-----------------------------
 %% TikZ and PGFPlots
 %%-----------------------------
