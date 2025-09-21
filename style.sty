@@ -1,39 +1,58 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{style}
 
-%%-----------------------------
-%% Layout, Fonts, and Graphics
-%%-----------------------------
-\usepackage[margin=0.5in, bottom=1in, top=1in, footskip=31.5pt]{geometry}
+%%------------------------------
+%% Setup & Typography
+%%------------------------------
+\usepackage[left=0.5in, right=0.5in, bottom=1.0in, top=1.0in, footskip=30pt]{geometry}
 \usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage{palatino}
-\usepackage{graphicx}
-\usepackage{microtype}
-\usepackage{xcolor}
-\setlength{\parindent}{0pt}
-\graphicspath{{./images/}}
-\hbadness=10000
-
-%%-----------------------------
-%% Functional Packages
-%%-----------------------------
-\usepackage{caption, diagbox, empheq, fancyhdr, float, multicol, pgfplots, url}
-\usepackage[colorlinks=true, pdfstartview=FitV, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
-\usepackage{bookmark}
-\usepackage{changepage}
 \usepackage{enumitem}
-\usepackage{import}
+\usepackage{palatino}
+\usepackage{microtype}
 \usepackage{moresize}
-\usepackage[many]{tcolorbox}
-\pagestyle{fancy}
-\setlength{\headheight}{15pt}
-\newcommand*\widefbox[1]{\fbox{\hspace{1em}#1\hspace{1em}}}
+\usepackage{parskip}
+\usepackage{xcolor}
 
-%%-----------------------------
-%% Mathematics Packages and Operators
-%%-----------------------------
-\usepackage{amsmath, amssymb, amsthm}
+%%------------------------------
+%% Page Layout
+%%------------------------------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\hbadness=10000
+\setlength{\headheight}{15pt}
+\usepackage{multicol}
+\usepackage{changepage}
+
+%%------------------------------
+%% Graphics, Plots, and Diagrams
+%%------------------------------
+\usepackage{float}
+\usepackage{graphicx}
+\graphicspath{{./images/}}
+\usepackage{import}
+\usepackage[framemethod=TikZ]{mdframed}
+\usepackage[many]{tcolorbox}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{
+  3d, arrows.meta, automata, backgrounds, calc, graphs, patterns, positioning, quotes,
+  shadings, angles, decorations.pathmorphing, decorations.pathreplacing, 
+  fadings, perspective, intersections, decorations.markings, bending
+}
+\usepgfplotslibrary{groupplots, external, colormaps, patchplots, fillbetween}
+\usepackage{diagbox}
+\usepackage{caption}
+
+%%------------------------------
+%% Mathematics
+%%------------------------------
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{empheq}
+\usepackage{cancel}
 \usepackage[scr]{rsfso}
 \DeclareMathOperator{\csch}{csch}
 \DeclareMathOperator{\sech}{sech}
@@ -47,48 +66,22 @@
 \DeclareMathOperator{\arccsch}{arccsch}
 \DeclareMathOperator{\arccoth}{arccoth}
 \newcommand{\dd}{\mathrm{d}}
-\usepackage{cancel}
+\newcommand*\widefbox[1]{\fbox{\hspace{1em}#1\hspace{1em}}}
 
-%%-----------------------------
-%% Computer Science Packages
-%%-----------------------------
+%%------------------------------
+%% Computer Science
+%%------------------------------
+\usepackage[linesnumbered, ruled, vlined, nofillcomment, noend]{algorithm2e}
 \usepackage{listings}
-\usepackage[linesnumbered,ruled,vlined,nofillcomment,noend]{algorithm2e}
 \DontPrintSemicolon
 \SetAlgoNoEnd
 \SetNlSty{textbf}{}{.}
 \SetArgSty{textnormal}
-\newcommand\mycommfont[1]{ \textcolor{blue}{{#1}}}
+\newcommand\mycommfont[1]{\textcolor{blue}{{#1}}}
 \SetCommentSty{mycommfont}
 
-% the lines below allow \texttt line breaking without creating hyphens or splitting words
-% \replace replaces all occurrences of the second arg in the first arg with the third arg
-\ExplSyntaxOn
-\NewDocumentCommand{\replace}{mmm}
- {
-  \marian_replace:nnn {#1} {#2} {#3}
- }
-\tl_new:N \l_marian_input_text_tl
-\cs_new_protected:Npn \marian_replace:nnn #1 #2 #3
- {
-  \tl_set:Nn \l_marian_input_text_tl { #1 }
-  \tl_replace_all:Nnn \l_marian_input_text_tl { #2 } { #3 }
-  \tl_use:N \l_marian_input_text_tl
- }
-\ExplSyntaxOff
-\let\OldTexttt\texttt
-\renewcommand{\texttt}[1]{\OldTexttt{\replace{#1}{ }{ \allowbreak}}}
-
-%%-----------------------------
-%% TikZ and PGFPlots
-%%-----------------------------
-\usepackage{tikz}
-\usepackage{tikz-3dplot}
-\usetikzlibrary{
-  3d, arrows.meta, automata, backgrounds, calc, graphs, patterns, positioning, quotes,
-  shadings, angles, decorations.pathmorphing, decorations.pathreplacing, 
-  fadings, perspective, intersections, decorations.markings, bending
-}
-\usepackage[framemethod=TikZ]{mdframed}
-\pgfplotsset{compat=1.18}
-\usepgfplotslibrary{groupplots, external, colormaps, patchplots, fillbetween}
+%%------------------------------
+%% Packages to be loaded LAST
+%%------------------------------
+\usepackage[colorlinks=true, pdfstartview=FitV, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{bookmark}
